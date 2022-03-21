@@ -25,22 +25,12 @@ const questionsManager = [
   {
     type: 'input',
     message: "What is the manager's office number?",
-    name: 'office-num',
+    name: 'office',
   },
   {
     type: 'input',
     message: "What is the manager's office ID?",
     name: 'id',
-  },
-  {
-    type: 'rawlist',
-    message: 'Would you like to add another employee',
-    name: 'type',
-    choices: [
-      {name: 'Engineer', value: 'engineer'},
-      {name: 'Intern', value: 'intern'},
-      {name: 'None', value: 'none'},
-    ]
   },
 ];
 
@@ -90,6 +80,19 @@ const questionsEngineer = [
   },
 ];
 
+const questionsAdd = [
+  {
+  type: 'rawlist',
+  message: 'Would you like to add another employee',
+  name: 'type',
+  choices: [
+    {name: 'Engineer', value: 'engineer'},
+    {name: 'Intern', value: 'intern'},
+    {name: 'None', value: 'none'},
+  ]
+  },
+];
+
 // Function that creates an HTML file and adds it to the dist folder in the repository
 function writeToFile(text) {
   fs.writeFile('./dist/index.html', text, (err) => {
@@ -107,11 +110,7 @@ function promptManager() {
   .prompt(questionsManager)
     .then ((data) => {
       console.log(data);
-      switch (data.type) {
-        case 'engineer': return console.log('engineer chosen');
-        case 'intern': return console.log('intern chosen');
-        case 'none': return console.log('none chosen');
-      }
+      addEmployee();
       // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
@@ -122,6 +121,7 @@ function promptEngineer() {
   .prompt(questionsEngineer)
     .then ((data) => {
       console.log(data);
+      addEmployee();
       // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
@@ -132,6 +132,21 @@ function promptIntern() {
   .prompt(questionsIntern)
     .then ((data) => {
       console.log(data);
+      addEmployee();
+      // may have to add this information to an array/object instead
+    })
+    .catch((err) => {console.log(err)});
+};
+
+function addEmployee() {
+  inquirer
+  .prompt(questionsAdd)
+    .then ((data) => {
+      switch (data.type) {
+        case 'engineer': return promptEngineer();
+        case 'intern': return promptIntern();
+        case 'none': return console.log('none chosen');
+      };
       // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
