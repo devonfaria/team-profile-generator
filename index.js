@@ -6,6 +6,7 @@ const fs = require('fs');
 // const internTest = require('./tests/intern.test');
 // const managerTest = require('./tests/manager.test');
 
+// QUESTIONS FOR TERMINAL PROMPTS
 const questionsManager = [
   {
     type: 'input',
@@ -34,29 +35,6 @@ const questionsManager = [
   },
 ];
 
-const questionsIntern = [
-  {
-    type: 'input',
-    message: "What is the intern's name?",
-    name: 'name',
-  },
-  {
-    type: 'input',
-    message: "What is the intern's school?",
-    name: 'username',
-  },
-  {
-    type: 'input',
-    message: "What is the intern's email?",
-    name: 'email',
-  },
-  {
-    type: 'input',
-    message: "What is the intern's office ID?",
-    name: 'id',
-  },
-];
-
 const questionsEngineer = [
   {
     type: 'input',
@@ -76,6 +54,29 @@ const questionsEngineer = [
   {
     type: 'input',
     message: "What is the engineer's office ID?",
+    name: 'id',
+  },
+];
+
+const questionsIntern = [
+  {
+    type: 'input',
+    message: "What is the intern's name?",
+    name: 'name',
+  },
+  {
+    type: 'input',
+    message: "What is the intern's school?",
+    name: 'username',
+  },
+  {
+    type: 'input',
+    message: "What is the intern's email?",
+    name: 'email',
+  },
+  {
+    type: 'input',
+    message: "What is the intern's office ID?",
     name: 'id',
   },
 ];
@@ -100,7 +101,41 @@ function writeToFile(text) {
   })
 };
 
-// FUNCTION ELEMENTS TO GENERATE TEXT FOR HTML
+// GENERATES BASE HTML PAGE
+const generateHTML = function () {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Team</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <header>
+    <h1>My Team</h1>
+  </header>
+  <main>
+  </main>
+</body>
+</html>`
+}
+
+// GENERATES TEXT FOR HTML PAGE
+const generateCard = function (data) {
+  return `<div>
+  <div>
+    <h2>${data.name}</h2>
+    <h3>${data.title}</h3>
+  </div>
+  <div>
+    <p>${data.id}</p>
+    <p><span>${data.email}</span></p>
+    <p><span>${data.office}</span></p>
+  </div>
+</div>`
+}
 // const htmlText = 'generateHTML function passing data';
 // writeToFile(htmlText);
 
@@ -111,6 +146,7 @@ function promptManager() {
     .then ((data) => {
       console.log(data);
       addEmployee();
+      writeToFile(generateHTML());
       // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
