@@ -84,12 +84,12 @@ const questionsIntern = [
 const questionsAdd = [
   {
   type: 'rawlist',
-  message: 'Would you like to add another employee',
+  message: 'Would you like to add another employee?',
   name: 'type',
   choices: [
     {name: 'Engineer', value: 'engineer'},
     {name: 'Intern', value: 'intern'},
-    {name: 'None', value: 'none'},
+    {name: 'No', value: 'none'},
   ]
   },
 ];
@@ -143,8 +143,9 @@ function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      const newManager = new Employee (data.name, data.username, data.email, data.office, data.id, 'Manager');
+      const newManager = new Employee (data.name, data.id, data.email);
       console.log(newManager);
+      console.log(newManager.getName());
       addEmployee();
       writeToFile(generateHTML());
       // may have to add this information to an array/object instead
