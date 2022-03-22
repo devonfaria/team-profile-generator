@@ -1,31 +1,36 @@
-const Employee = require("../lib/employee");
+const Manager = require("../lib/manager");
 
-describe("promptManager", () => {
-  // Positive Tests
-  it("should return an object with properties", () => {
-    // Arrange
-    const todoList = new ;
-    const todoText = "Mow Lawn";
-
-    // Act
-    todoList.addTodo(todoText);
-
-    // Assert
-    expect(todoList.todos.length).toEqual(1);
-    expect(todoList.todos[0] instanceof Todo).toEqual(true);
-    expect(todoList.todos[0].text).toEqual(todoText);
+describe("Manager", () => {
+  describe("init", () => {
+    it('should require a name, id, and email', () => {
+      const manager = new Manager('Randy', '1', 'r@email.com');
+      expect('name' in manager).toBe(true);
+      expect('id' in manager).toBe(true);
+      expect('email' in manager).toBe(true);
+    });
   });
-
-  // Exception test
-  it("should throw an error if not provided text", () => {
-    // Arrange
-    const todoList = new TodoList();
-    const err = new Error(
-      "Expected parameter 'text' to be a non empty string"
-    );
-    const cb = () => todoList.addTodo();
-
-    // Assert
-    expect(cb).toThrowError(err);
+  describe("getName", () => {
+    it('should return the name of the manager', () => {
+      const manager = new Manager('Randy', '1', 'r@email.com');
+      expect(manager.getName()).toBe('Randy');
+    });
+  });
+  describe("getId", () => {
+    it('should return the id of the manager', () => {
+      const manager = new Manager('Randy', '1', 'r@email.com');
+      expect(manager.getId()).toBe('1');
+    });
+  });
+  describe("getRole", () => {
+    it('should return the role of the manager', () => {
+      const manager = new Manager('Randy', '1', 'r@email.com');
+      expect(manager.getRole()).toBe('Manager');
+    });
+  });
+  describe("getEmail", () => {
+    it('should return the email of the intern', () => {
+      const manager = new Manager('Randy', '1', 'r@email.com');
+      expect(manager.getEmail()).toBe('r@email.com');
+    });
   });
 });
