@@ -102,7 +102,7 @@ function writeToFile(text) {
 };
 
 // GENERATES BASE HTML PAGE
-const generateHTML = function () {
+const generateHTML = function (cards) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,24 +118,41 @@ const generateHTML = function () {
     <h1>My Team</h1>
   </header>
   <main>
+    ${cards}
   </main>
 </body>
 </html>`
 };
 
 // GENERATES CARD FOR HTML PAGE
-const generateCard = function (data) {
-  return `<div>
-  <div>
-    <h2>${data.name}</h2>
-    <h3>${data.title}</h3>
-  </div>
-  <div>
-    <p>${data.id}</p>
-    <p><span>${data.email}</span></p>
-    <p><span>${data.office}</span></p>
-  </div>
-</div>`
+const generateCard = function (name, id, email, icon, office) {
+  return `<div class="container-fluid row justify-content-center d-flex flex-wrap">
+  <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+    <div class="card-header">
+      <h2>${name}</h2>
+      <h3><i class="fa-solid fa-mug-hot">${icon} Manager</i></h3>
+    </div>
+    <div class="card-body">
+      <p class="d-flex p-2 bd-highlight">${id}</p>
+      <a href="mailto:${email}" class="card-link">${email}</a>
+      <p class=""><span>${office}</span></p>
+    </div>
+  </div>`
+};
+
+const generateCard = function (name, id, email, icon, office) {
+  return `<div class="container-fluid row justify-content-center d-flex flex-wrap">
+  <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+    <div class="card-header">
+      <h2>${name}</h2>
+      <h3><i class="fa-solid fa-mug-hot">${icon} Manager</i></h3>
+    </div>
+    <div class="card-body">
+      <p class="d-flex p-2 bd-highlight">${id}</p>
+      <a href="mailto:${email}" class="card-link">${email}</a>
+      <p class=""><span>${office}</span></p>
+    </div>
+  </div>`
 };
 
 // Initializes the terminal questions
@@ -143,11 +160,10 @@ function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      const newManager = new Employee (data.name, data.id, data.email);
-      console.log(newManager);
-      console.log(newManager.getName());
-      addEmployee();
-      writeToFile(generateHTML());
+      const newManager = new Employee (data.name, data.id, '<i class="fa-solid fa-mug-hot"></i>', data.email);
+      writeToFile(generateHTML(generateCard(data.name, data.id, data.email, data.office)));
+      // addEmployee();
+      // writeToFile(generateHTML());
       // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
