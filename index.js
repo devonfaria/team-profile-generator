@@ -1,15 +1,16 @@
 // Linking required files and dependencies
 const inquirer = require('inquirer');
 const fs = require('fs');
-const Manager = [];
-const Engineer = [];
-const Intern = [];
+const Employee = require('./lib/employee');
+// const Manager = require('./lib/manager');
+// const Engineer = require('./lib/engineer');
+// const Intern = require('./lib/intern');
 
 // QUESTIONS FOR TERMINAL PROMPTS
 const questionsManager = [
   {
     type: 'input',
-    message: "What is your manager's name?",
+    message: "What is the manager's name?",
     name: 'name',
   },
   {
@@ -142,7 +143,8 @@ function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      console.log(data);
+      const newManager = new Employee (data.name, data.username, data.email, data.office, data.id, 'Manager');
+      console.log(newManager);
       addEmployee();
       writeToFile(generateHTML());
       // may have to add this information to an array/object instead
