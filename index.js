@@ -7,7 +7,8 @@ const Employee = require('./lib/employee');
 // const Intern = require('./lib/intern');
 
 // CONCAT VARIABLES
-let cards = '';
+let cards = [];
+let employees = [];
 
 // QUESTIONS FOR TERMINAL PROMPTS
 const questionsManager = [
@@ -104,6 +105,13 @@ function writeToFile(text) {
   })
 };
 
+// I want to have an array of employees that I can use a for each to create cards with. 
+// Create an array of employee objects 
+// 
+
+
+
+
 // GENERATES BASE HTML PAGE
 const generateHTML = function (cards) {
   return `<!DOCTYPE html>
@@ -142,8 +150,7 @@ const generateCard = function (name, id, email, icon, office) {
       <p class=""><span>${office}</span></p>
     </div>
   </div><br>`
-  cards.concat('<br>', cardHTML);
-  console.log(cards);
+  cards.push(cardHTML);
 };
 
 const generateOtherCard = function (name, id, email, icon, username) {
@@ -163,7 +170,14 @@ const generateOtherCard = function (name, id, email, icon, username) {
   console.log(cards);
 };
 
-const generateOtherCard2 = function (name, id, email, icon, school) {
+const generateOtherCard2 = function (Employee) {
+  switch (Employee.getRole()) {
+    case 'Intern':  
+    return `<p class="">School: ${school}</p>`
+    break;
+    case 
+
+  }
   let cardHTML = `<div class="container-fluid row justify-content-center d-flex flex-wrap">
   <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
     <div class="card-header">
@@ -173,7 +187,7 @@ const generateOtherCard2 = function (name, id, email, icon, school) {
     <div class="card-body">
       <p class="d-flex p-2 bd-highlight">${id}</p>
       <a href="mailto:${email}" class="card-link">${email}</a>
-      <p class="">School: ${school}</p>
+      
     </div>
   </div><br>`
   cards.concat('<br>', cardHTML);
@@ -186,12 +200,13 @@ function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      const newManager = new Employee (data.name, data.id, data.email);
-      generateCard(data.name, data.id, data.email,'<i class="fa-solid fa-mug-hot"></i>', data.office);
-      addEmployee();
-      // writeToFile(generateHTML());
-      // may have to add this information to an array/object instead
-    })
+      // look in to how we could use try and catch statement. 
+
+      const newManager = new Manager (data.name, data.id, data.email);
+      employees.push(newManager)
+      console.log(`The current employees in the roster: ${employees}`)
+      // writeToFile(generateHTML())
+    }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
 
