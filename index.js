@@ -6,6 +6,9 @@ const Employee = require('./lib/employee');
 // const Engineer = require('./lib/engineer');
 // const Intern = require('./lib/intern');
 
+// CONCAT VARIABLES
+let cards = '';
+
 // QUESTIONS FOR TERMINAL PROMPTS
 const questionsManager = [
   {
@@ -67,7 +70,7 @@ const questionsIntern = [
   {
     type: 'input',
     message: "What is the intern's school?",
-    name: 'username',
+    name: 'school',
   },
   {
     type: 'input',
@@ -110,8 +113,9 @@ const generateHTML = function (cards) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Team</title>
+  <script src="https://kit.fontawesome.com/1f93c332b8.js" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="../src/style.css">
 </head>
 <body>
   <header>
@@ -126,43 +130,65 @@ const generateHTML = function (cards) {
 
 // GENERATES CARD FOR HTML PAGE
 const generateCard = function (name, id, email, icon, office) {
-  return `<div class="container-fluid row justify-content-center d-flex flex-wrap">
+  let cardHTML = `<div class="container-fluid row justify-content-center d-flex flex-wrap">
   <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
     <div class="card-header">
       <h2>${name}</h2>
-      <h3><i class="fa-solid fa-mug-hot">${icon} Manager</i></h3>
+      <h3>${icon} Manager</i></h3>
     </div>
     <div class="card-body">
       <p class="d-flex p-2 bd-highlight">${id}</p>
       <a href="mailto:${email}" class="card-link">${email}</a>
       <p class=""><span>${office}</span></p>
     </div>
-  </div>`
+  </div><br>`
+  cards.concat('<br>', cardHTML);
+  console.log(cards);
 };
 
-const generateCard = function (name, id, email, icon, office) {
-  return `<div class="container-fluid row justify-content-center d-flex flex-wrap">
+const generateOtherCard = function (name, id, email, icon, username) {
+  let cardHTML = `<div class="container-fluid row justify-content-center d-flex flex-wrap">
   <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
     <div class="card-header">
       <h2>${name}</h2>
-      <h3><i class="fa-solid fa-mug-hot">${icon} Manager</i></h3>
+      <h3>${icon} Manager</i></h3>
     </div>
     <div class="card-body">
       <p class="d-flex p-2 bd-highlight">${id}</p>
       <a href="mailto:${email}" class="card-link">${email}</a>
-      <p class=""><span>${office}</span></p>
+      <a href="https://github.com/${username}" class="card-link" target="_blank">Github: ${username}</a>
     </div>
-  </div>`
+  </div><br>`
+  cards.concat('<br>', cardHTML);
+  console.log(cards);
 };
+
+const generateOtherCard2 = function (name, id, email, icon, school) {
+  let cardHTML = `<div class="container-fluid row justify-content-center d-flex flex-wrap">
+  <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+    <div class="card-header">
+      <h2>${name}</h2>
+      <h3>${icon} Manager</i></h3>
+    </div>
+    <div class="card-body">
+      <p class="d-flex p-2 bd-highlight">${id}</p>
+      <a href="mailto:${email}" class="card-link">${email}</a>
+      <p class="">School: ${school}</p>
+    </div>
+  </div><br>`
+  cards.concat('<br>', cardHTML);
+  console.log(cards);
+};
+
 
 // Initializes the terminal questions
 function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      const newManager = new Employee (data.name, data.id, '<i class="fa-solid fa-mug-hot"></i>', data.email);
-      writeToFile(generateHTML(generateCard(data.name, data.id, data.email, data.office)));
-      // addEmployee();
+      const newManager = new Employee (data.name, data.id, data.email);
+      generateCard(data.name, data.id, data.email,'<i class="fa-solid fa-mug-hot"></i>', data.office);
+      addEmployee();
       // writeToFile(generateHTML());
       // may have to add this information to an array/object instead
     })
@@ -173,7 +199,7 @@ function promptEngineer() {
   inquirer
   .prompt(questionsEngineer)
     .then ((data) => {
-      console.log(data);
+      generateOtherCard(data.name, data.id, data.email,'<i class="fa-solid fa-glasses"></i>', data.username);
       addEmployee();
       // may have to add this information to an array/object instead
     })
@@ -184,7 +210,7 @@ function promptIntern() {
   inquirer
   .prompt(questionsIntern)
     .then ((data) => {
-      console.log(data);
+      generateOtherCard2(data.name, data.id, data.email,'<i class="fa-solid fa-user-graduate"></i>', data.school);
       addEmployee();
       // may have to add this information to an array/object instead
     })
