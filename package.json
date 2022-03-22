@@ -23,5 +23,8 @@
   "homepage": "https://github.com/devonfaria/team-profile-generator#readme",
   "dependencies": {
     "inquirer": "^8.2.1"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
