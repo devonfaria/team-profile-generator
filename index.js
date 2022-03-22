@@ -177,12 +177,9 @@ function promptManager() {
   inquirer
   .prompt(questionsManager)
     .then ((data) => {
-      // look in to how we could use try and catch statement. 
-
-      const newManager = new Manager (data.name, data.id, data.email);
+      const newManager = new Manager (data.name, data.id, data.email, data.office);
       employees.push(newManager)
-      console.log(`The current employees in the roster: ${employees}`)
-      // writeToFile(generateHTML())
+      console.log(employees)
     }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
@@ -191,10 +188,10 @@ function promptEngineer() {
   inquirer
   .prompt(questionsEngineer)
     .then ((data) => {
-      generateOtherCard(data.name, data.id, data.email,'<i class="fa-solid fa-glasses"></i>', data.username);
-      addEmployee();
-      // may have to add this information to an array/object instead
-    })
+      const newEngineer = new Engineer (data.name, data.id, data.email, data.username);
+      employees.push(newEngineer)
+      console.log(employees)
+    }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
 
@@ -202,10 +199,10 @@ function promptIntern() {
   inquirer
   .prompt(questionsIntern)
     .then ((data) => {
-      generateOtherCard2(data.name, data.id, data.email, data.school);
-      addEmployee();
-      // may have to add this information to an array/object instead
-    })
+      const newIntern = new Intern (data.name, data.id, data.email, data.school);
+      employees.push(newIntern)
+      console.log(employees)
+    }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
 
@@ -218,7 +215,6 @@ function addEmployee() {
         case 'intern': return promptIntern();
         case 'none': return console.log('none chosen');
       };
-      // may have to add this information to an array/object instead
     })
     .catch((err) => {console.log(err)});
 };
