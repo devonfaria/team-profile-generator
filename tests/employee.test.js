@@ -28,4 +28,10 @@ describe("Employee", () => {
       expect(employee.getEmail()).toBe('hi@aol.com');
     });
   });
+  describe("getRole", () => {
+    it('should return the role as employee', () => {
+      const employee = new Employee('Tyrion', '1', 'hi@aol.com');
+      expect(employee.getRole()).toBe('Employee');
+    });
+  });
 });
