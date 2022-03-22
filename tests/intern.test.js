@@ -1,4 +1,4 @@
-const index = require('../index');
+const Employee = require("../lib/employee");
 
 const intern = {
   name: 'Devon Faria',

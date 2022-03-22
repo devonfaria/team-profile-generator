@@ -1,4 +1,4 @@
-const index = require('../index');
+const Employee = require("../lib/employee");
 
 describe("promptManager", () => {
   // Positive Tests
