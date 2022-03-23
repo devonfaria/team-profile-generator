@@ -155,7 +155,7 @@ const generateCards = function (employees) {
       otherInfo = `Office number: ${employee.office}`;
     } else if (role === 'Engineer') {
       icon = '<i class="fa-solid fa-glasses"></i>';
-      otherInfo = `<a href="https://github.com/${employee.username}" class="card-link" target="_blank">Github: ${employee.username}</a>`;
+      otherInfo = `<p class="d-flex bd-highlight">GitHub: <a href="https://github.com/${employee.username}" class="card-link" target="_blank">${employee.username}</a></p>`;
     } else if (role === 'Intern') {
       icon = '<i class="fa-solid fa-user-graduate"></i>';
       otherInfo = `<p class="">School: ${employee.school}</p>`;
@@ -168,8 +168,8 @@ const generateCards = function (employees) {
         <h3>${icon} ${role}</i></h3>
       </div>
       <div class="card-body">
-        <p class="d-flex p-2 bd-highlight">${employee.id}</p>
-        <a href="mailto:${employee.email}" class="card-link">${employee.email}</a>
+        <p class="d-flex bd-highlight">ID: ${employee.id}</p>
+        <a href="mailto:${employee.email}" class="card-link">Email: ${employee.email}</a>
         ${otherInfo}
       </div>
     </div>\n`;
@@ -226,3 +226,5 @@ function addEmployee() {
 
 // Initializes prompts
 promptManager();
+
+// `<a href="https://github.com/${employee.username}" class="card-link" target="_blank">Github: ${employee.username}</a>`;
