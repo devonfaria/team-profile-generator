@@ -128,6 +128,7 @@ const generateHTML = function (cards) {
     <h1>My Team</h1>
   </header>
   <main>
+    <div class="container-fluid row justify-content-center d-flex flex-wrap">
     ${cards}
   </main>
 </body>
@@ -137,39 +138,42 @@ const generateHTML = function (cards) {
 // GENERATES CARD FOR HTML PAGE
 // uses loop to create div card element for each staff member from employee array
 const generateCards = function (employees) {
+  console.log('Generate cards called');
+  console.log(employees);
   // Empty variabes for the switch case determining staff type
   let otherInfo = '';
   let icon = '';
   // Loop using employee information to fill HTML
   for (let employee of employees) {
     let role = employee.getRole();
+    console.log(role);
     if (role === 'Manager') {
       icon = '<i class="fa-solid fa-mug-hot"></i>';
-      otherInfo = ''; 
+      otherInfo = `Office number: ${employee.office}`;
     } else if (role === 'Engineer') {
       icon = '<i class="fa-solid fa-glasses"></i>';
-      otherInfo = `<a href="https://github.com/${username}" class="card-link" target="_blank">Github: ${username}</a>`;
+      otherInfo = `<a href="https://github.com/${employee.username}" class="card-link" target="_blank">Github: ${employee.username}</a>`;
     } else if (role === 'Intern') {
       icon = '<i class="fa-solid fa-user-graduate"></i>';
       otherInfo = `<p class="">School: ${employee.school}</p>`;
     };
 
-  // Template for div card elements
-  let cardHTML = `<div class="container-fluid row justify-content-center d-flex flex-wrap">
-  <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
-    <div class="card-header">
-      <h2>${employee.name}</h2>
-      <h3>${icon} Manager</i></h3>
-    </div>
-    <div class="card-body">
-      <p class="d-flex p-2 bd-highlight">${employee.id}</p>
-      <a href="mailto:${employee.email}" class="card-link">${employee.email}</a>
-      ${otherInfo}
-    </div>
-  </div>\n`
-  cards.concat('<br>', cardHTML);
-  console.log(cards);
-}
+    // Template for div card elements
+    let cardHTML = `  <div class="card m-5 shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+      <div class="card-header">
+        <h2>${employee.name}</h2>
+        <h3>${icon} ${role}</i></h3>
+      </div>
+      <div class="card-body">
+        <p class="d-flex p-2 bd-highlight">${employee.id}</p>
+        <a href="mailto:${employee.email}" class="card-link">${employee.email}</a>
+        ${otherInfo}
+      </div>
+    </div>\n`;
+    let newText = cards.concat(cardHTML);
+    cards = newText;
+    console.log(`Cards: ` + cards);
+  };
 };
 
 // Initializes the terminal questions
@@ -178,8 +182,7 @@ function promptManager() {
   .prompt(questionsManager)
     .then ((data) => {
       const newManager = new Manager (data.name, data.id, data.email, data.office);
-      employees.push(newManager)
-      console.log(employees)
+      employees.push(newManager);
     }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
@@ -189,8 +192,7 @@ function promptEngineer() {
   .prompt(questionsEngineer)
     .then ((data) => {
       const newEngineer = new Engineer (data.name, data.id, data.email, data.username);
-      employees.push(newEngineer)
-      console.log(employees)
+      employees.push(newEngineer);
     }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
@@ -200,8 +202,7 @@ function promptIntern() {
   .prompt(questionsIntern)
     .then ((data) => {
       const newIntern = new Intern (data.name, data.id, data.email, data.school);
-      employees.push(newIntern)
-      console.log(employees)
+      employees.push(newIntern);
     }).then(()=>{addEmployee()})
     .catch((err) => {console.log(err)});
 };
@@ -213,7 +214,7 @@ function addEmployee() {
       switch (data.type) {
         case 'engineer': return promptEngineer();
         case 'intern': return promptIntern();
-        case 'none': return console.log('none chosen');
+        case 'none': return generateCards(employees);
       };
     })
     .catch((err) => {console.log(err)});
