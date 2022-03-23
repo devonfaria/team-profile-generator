@@ -112,7 +112,7 @@ function writeToFile(text) {
 
 // GENERATES BASE HTML PAGE
 const generateHTML = function (cards) {
-  return `<!DOCTYPE html>
+  let htmlBody = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -129,10 +129,13 @@ const generateHTML = function (cards) {
   </header>
   <main>
     <div class="container-fluid row justify-content-center d-flex flex-wrap">
-    ${cards}
+      ${cards}
+    </div>
   </main>
 </body>
-</html>`
+</html>`;
+  console.log(`HTML Body: ` + htmlBody);
+  writeToFile(htmlBody)
 };
 
 // GENERATES CARD FOR HTML PAGE
@@ -174,9 +177,10 @@ const generateCards = function (employees) {
     cards = newText;
     console.log(`Cards: ` + cards);
   };
+  generateHTML(cards);
 };
 
-// Initializes the terminal questions
+// Initializes the terminal questions for different staff types, and adds to employee array, and triggers prompt to add new employee
 function promptManager() {
   inquirer
   .prompt(questionsManager)
